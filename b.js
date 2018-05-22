@@ -3,8 +3,8 @@ const biotCore = require('biot-core');
 const Channel = require('biot-core/lib/Channel');
 
 let minAmount = 4000;
-let peerPairingCode = 'A/btqLlcKH48tArT0MFtOv4pFdxwlpcyCLXJ/yBGECAG@biot.ws/bb-test#test';
-let peerDeviceAddress = '024ENIFM6JNZQJ4M5B53EMVIW7YDR4SCW';
+let peerPairingCode = 'AlPzda6EcehhEvUyHwgflLp7ARn5AODQCOOqGIxCsvRK@biot.ws/bb-test#test';
+let peerDeviceAddress = '0NVWZAXA4YCZOQTQLQYVSS5ZKVRBYPOIE';
 
 let initialized = false;
 let channel;
@@ -20,7 +20,7 @@ async function start() {
 
 	let balance = await biotCore.getAddressBalance(arrAddresses[0]);
 	console.error('balance', balance);
-	if (balance.base.stable < minAmount) {
+	if (balance.base.stable < minAmount && balance.base.pending < minAmount) {
 		return console.error('Please use the faucet or replenish your account')
 	}
 
@@ -44,7 +44,10 @@ async function start() {
 start().catch(console.error);
 
 async function changeLed(number) {
-	await channel.transfer(2, {led: number});
+	if(initialized) {
+		await channel.transfer(2, {led: number});
+		console.error('buy led');
+	}
 }
 
 let button1 = gpio.export(14, {

@@ -13,7 +13,7 @@ async function start() {
 
 	let balance = await biotCore.getAddressBalance(arrAddresses[0]);
 	console.error('balance', balance);
-	if (balance.base.stable < minAmount) {
+	if (balance.base.stable < minAmount && balance.base.pending < minAmount) {
 		return console.error('Please use the faucet or replenish your account')
 	}
 
@@ -23,7 +23,7 @@ async function start() {
 		list.forEach(async channel => {
 			if (channel.step === 'waiting_transfers') {
 				let _channel = channelsManager.recoveryChannel(channel);
-				await _channel.closeNow();
+				await _channel.closeNow().catch(console.error);
 			}
 		});
 	}
@@ -57,8 +57,9 @@ async function start() {
 			led5.set(0);
 			if (active) {
 				ledQueue.push({led: message.led});
+			} else {
+				activateLed(message.led);
 			}
-			activateLed(message.led);
 		});
 		await channel.init();
 		await channel.approve();
@@ -98,13 +99,13 @@ function activateLed(number) {
 	}
 	setTimeout(() => {
 		if (ledQueue.length) {
-			activateLed(ledQueue.shift());
+			activateLed(ledQueue.shift().led);
 		} else {
-			active = false;
 			led1.set(0);
 			led2.set(0);
 			led3.set(0);
 			led4.set(0);
+			active = false;
 		}
 	}, 3000);
 }
