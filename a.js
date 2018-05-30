@@ -22,8 +22,8 @@ async function start() {
 	if (list.length) {
 		list.forEach(async channel => {
 			if (channel.step === 'waiting_transfers') {
-				let _channel = channelsManager.recoveryChannel(channel);
-				await _channel.closeNow().catch(console.error);
+				let _channel = channelsManager.restoreChannel(channel);
+				await _channel.closeOneSide().catch(console.error);
 			}
 		});
 	}
