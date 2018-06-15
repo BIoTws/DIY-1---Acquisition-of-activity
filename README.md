@@ -3,7 +3,7 @@
 #### A device:
 ```sh
 $ git clone https://github.com/BIoTws/DIY-1_Acquisition_of_activity
-$ cd example-biot-channels
+$ cd DIY-1_Acquisition_of_activity
 $ npm install
 $ ./testnetify.sh
 $ node a.js
@@ -12,7 +12,7 @@ $ node a.js
 #### B device:
 ```sh
 $ git clone https://github.com/BIoTws/DIY-1_Acquisition_of_activity
-$ cd example-biot-channels
+$ cd DIY-1_Acquisition_of_activity
 $ npm install
 $ ./testnetify.sh
 $ node b.js
