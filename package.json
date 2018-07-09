@@ -9,7 +9,7 @@
   "author": "xJeneK",
   "license": "ISC",
   "dependencies": {
-    "biot-core": "^0.0.9",
+    "biot-core": "^0.1.x",
     "gpio": "^0.2.7"
   }
 }
